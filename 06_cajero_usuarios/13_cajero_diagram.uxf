@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>30</y>
+      <w>260</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>model::Cuenta
+--
+-serialVersionUID = 1L: long
+-numeroCuenta: int
+-saldo: double
+-tipocuenta: String
+-movimientos: List&lt;Movimiento&gt;
+-clientes: List&lt;Cliente&gt;
+--
++Cuenta(): ctor
++Cuenta(int numeroCuenta, double saldo, String tipocuenta): ctor
++getNumeroCuenta(): int
++setNumeroCuenta(int numeroCuenta): void
++getSaldo(): double
++setSaldo(double saldo): void
++getTipocuenta(): String
++setTipocuenta(String tipocuenta): void
++getMovimientos(): List&lt;Movimiento&gt;
++setMovimientos(List&lt;Movimiento&gt; movimientos): void
++addMovimiento(Movimiento movimiento): Movimiento
++removeMovimiento(Movimiento movimiento): Movimiento
++getClientes(): List&lt;Cliente&gt;
++setClientes(List&lt;Cliente&gt; clientes): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>50</y>
+      <w>290</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>model::Cliente
+--
+-serialVersionUID = 1L: long
+-dni: int
+-direccion: String
+-nombre: String
+-telefono: int
+-cuentas: List&lt;Cuenta&gt;
+--
++Cliente(): ctor
++Cliente(int dni, String direccion, String nombre, int telefono): ctor
++getDni(): int
++setDni(int dni): void
++getDireccion(): String
++setDireccion(String direccion): void
++getNombre(): String
++setNombre(String nombre): void
++getTelefono(): int
++setTelefono(int telefono): void
++getCuentas(): List&lt;Cuenta&gt;
++setCuentas(List&lt;Cuenta&gt; cuentas): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1000</x>
+      <y>40</y>
+      <w>290</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>model::Movimiento
+--
+-serialVersionUID = 1L: long
+-idMovimiento: int
+-cantidad: double
+-fecha: Date
+-operacion: String
+-cuenta: Cuenta
+--
++Movimiento(): ctor
++Movimiento(int idMovimiento, double cantidad, Date fecha, String operacion, Cuenta cuenta): ctor
++getIdMovimiento(): int
++setIdMovimiento(int idMovimiento): void
++getCantidad(): double
++setCantidad(double cantidad): void
++getFecha(): Date
++setFecha(Date fecha): void
++getOperacion(): String
++setOperacion(String operacion): void
++getCuenta(): Cuenta
++setCuenta(Cuenta cuenta): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>400</y>
+      <w>300</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>service::ServiceCajeroImpl
+--
+~daoClientes: DaoClientes
+~daoCuentas: DaoCuentas
+~daoMovimientos: DaoMovimientos
+--
++obtenerCuenta(int IdCuenta): Cuenta
++extraccion(int idCuenta, double cantidad): void
++ingreso(int idCuenta, double cantidad): void
++transferencia(int idCuentaOrigen, int idCuentaDestino, double cantidad): void
++obtenerTitulares(int idCuenta): List&lt;Cliente&gt;
++obtenerMovimientos(int idCuenta): List&lt;Movimiento&gt;
++obtenerSaldo(int idCuenta): double
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>410</y>
+      <w>290</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+service::ServiceCajero
+--
+--
++obtenerCuenta(int IdCuenta): Cuenta
++extraccion(int idCuenta, double cantidad): void
++ingreso(int idCuenta, double cantidad): void
++transferencia(int idCuentaOrigen, int idCuentaDestino, double cantidad): void
++obtenerTitulares(int idCuenta): List&lt;Cliente&gt;
++obtenerMovimientos(int idCuenta): List&lt;Movimiento&gt;
++obtenerSaldo(int idCuenta): double
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>650</y>
+      <w>210</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+dao::DaoClientes
+--
+--
++findClienteByCuenta(int idCuenta): List&lt;Cliente&gt;
++saveCliente(Cliente cliente): void
++updateCliente(Cliente cliente): void
++removeCliente(int dni): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>280</x>
+      <y>650</y>
+      <w>200</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>dao::DaoClientesImpl
+--
+~em: EntityManager
+--
++findClienteByCuenta(int idCuenta): List&lt;Cliente&gt;
++saveCliente(Cliente cliente): void
++updateCliente(Cliente cliente): void
++removeCliente(int dni): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>660</y>
+      <w>180</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+dao::DaoCuentas
+--
+--
++findCuenta(int numeroCuenta): Cuenta
++findAllCuenta(): List&lt;Cuenta&gt;
++updateCuenta(Cuenta cuenta): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>660</y>
+      <w>180</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>dao::DaoCuentasImpl
+--
+~em: EntityManager
+--
++findCuenta(int numeroCuenta): Cuenta
++findAllCuenta(): List&lt;Cuenta&gt;
++updateCuenta(Cuenta cuenta): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>970</x>
+      <y>670</y>
+      <w>190</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+dao::DaoMovimientos
+--
+--
++findMovimientoByCuenta(int idCuenta): List&lt;Movimiento&gt;
++saveMovimiento(Movimiento m): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1210</x>
+      <y>670</y>
+      <w>200</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>dao::DaoMovimientosImpl
+--
+~em: EntityManager
+--
++findMovimientoByCuenta(int idCuenta): List&lt;Movimiento&gt;
++saveMovimiento(Movimiento m): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>220</x>
+      <y>700</y>
+      <w>80</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>700</x>
+      <y>700</y>
+      <w>80</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1150</x>
+      <y>700</y>
+      <w>80</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>380</x>
+      <y>580</y>
+      <w>30</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>610</x>
+      <y>470</y>
+      <w>170</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>470</x>
+      <y>580</y>
+      <w>370</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0;350.0;50.0;350.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>550</x>
+      <y>580</y>
+      <w>750</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>730.0;90.0;730.0;30.0;10.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>740</x>
+      <y>80</y>
+      <w>280</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=  1
+
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;20.0;260.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>320</x>
+      <y>120</y>
+      <w>190</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1..n
+
+m2=1..n
+
+</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>60</x>
+      <y>360</y>
+      <w>250</w>
+      <h>310</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;240.0;230.0;240.0;230.0;290.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>370</y>
+      <w>230</w>
+      <h>310</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;220.0;210.0;220.0;210.0;290.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1230</x>
+      <y>350</y>
+      <w>160</w>
+      <h>340</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0;140.0;40.0;140.0;320.0</additional_attributes>
+  </element>
+</diagram>
