@@ -2,48 +2,51 @@ package dao;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import model.Cliente;
-import model.Cuenta;
 
 /**
  * Session Bean implementation class DaoClientesImpl
  */
-@Stateless
+@Repository
 public class DaoClientesImpl implements DaoClientes {
 
-	@PersistenceContext(unitName = "cajeroPU")
-	EntityManager em;
+	@Autowired
+	JdbcTemplate template;
 	
 	@Override
 	public List<Cliente> findClienteByCuenta(int idCuenta) {
-		Cuenta cuenta=em.find(Cuenta.class, idCuenta);
-		if(cuenta!=null) {
-			return cuenta.getClientes();
-		}
-		return null;
+		String sql="Select clientes.* from clientes as c inner join titulares as t on ";
+		sql+="c.dni=t.idCliente where ";
+		sql+="t.idCuenta=?";
+		return template.query(sql, (rs,fila)->new Cliente(rs.getInt("dni"),
+				rs.getString("direccion"),
+				rs.getString("nombre"),
+				rs.getInt("telefono")),
+			idCuenta
+		);
 	}
 
 	@Override
 	public void saveCliente(Cliente cliente) {
-		em.persist(cliente);
-		
+        String sql="insert into clientes values(?,?,?,?)";
+        template.update(sql,cliente.getDni(),cliente.getNombre(),cliente.getDireccion(),cliente.getTelefono());		
 	}
 
 	@Override
 	public void updateCliente(Cliente cliente) {
-		em.persist(cliente);
+		String sql="Update Clientes set nombre=?, direccion=?, telefono=? where ";
+		sql+="dni=?";
+		template.update(sql,cliente.getDni(),cliente.getNombre(),cliente.getDireccion(),cliente.getTelefono(),cliente);
 		
 	}
 
 	@Override
 	public void removeCliente(int dni) {
-		Cliente cliente=em.find(Cliente.class, dni);
-		if(cliente!=null) {
-			em.remove(cliente);
-		}		
+		String sql="delete from clientes where dni=?";
+		template.update(sql,dni);		
 	}
 }

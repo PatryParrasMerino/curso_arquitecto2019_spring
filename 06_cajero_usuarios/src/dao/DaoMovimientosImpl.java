@@ -2,33 +2,40 @@ package dao;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-import model.Cuenta;
 import model.Movimiento;
 
 /**
  * Session Bean implementation class DaoMovimientosImpl
  */
-@Stateless
+@Repository
 public class DaoMovimientosImpl implements DaoMovimientos {
 
-	@PersistenceContext(unitName = "cajeroPU")
-	EntityManager em;
+	@Autowired
+	JdbcTemplate template;
 	
 	@Override
 	public List<Movimiento> findMovimientoByCuenta(int idCuenta) {
-		Cuenta cuenta=em.find(Cuenta.class, idCuenta);
-		if(cuenta!=null) {
-			return cuenta.getMovimientos();
-		}
-		return null;
+		String sql="Select movimientos.* from movimientos  ";
+		sql+="where idCuenta=?";
+		
+		return template.query(sql, (rs,fila)->new Movimiento(rs.getInt("idMovimiento"),
+				rs.getDouble("cantidad"),
+				rs.getDate("fecha"),
+				rs.getString("operacion"),
+				idCuenta
+				),
+			idCuenta
+		);
 	}
 
 	@Override
 	public void saveMovimiento(Movimiento m) {
-		em.persist(m);		
+		String sql ="insert into movimientos (cantidad,fecha,operacion,idCuenta) ";
+		sql+="values(?,?,?,?)";
+		template.update(sql,m.getCantidad(),m.getFecha(),m.getOperacion(),m.getIdCuenta());	
 	}
 }

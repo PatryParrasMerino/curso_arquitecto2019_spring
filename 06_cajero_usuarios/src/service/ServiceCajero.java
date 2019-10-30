@@ -2,13 +2,11 @@ package service;
 
 import java.util.List;
 
-import javax.ejb.Local;
-
 import model.Cliente;
 import model.Cuenta;
 import model.Movimiento;
 
-@Local
+
 public interface ServiceCajero {
 	Cuenta obtenerCuenta(int IdCuenta);
 	void extraccion(int idCuenta, double cantidad);

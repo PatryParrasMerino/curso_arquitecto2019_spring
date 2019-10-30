@@ -2,37 +2,44 @@ package dao;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import model.Cuenta;
 
 /**
  * Session Bean implementation class DaoCuentasImpl
  */
-@Stateless
+@Repository
 public class DaoCuentasImpl implements DaoCuentas {
 
-	@PersistenceContext(unitName = "cajeroPU")
-	EntityManager em;
+	@Autowired
+	JdbcTemplate template;
 	
-	@Override
 	public Cuenta findCuenta(int numeroCuenta) {
-		return em.find(Cuenta.class, numeroCuenta);
+		String sql="select * from cuentas where numeroCuenta=?";
+		return template.queryForObject(sql, (rs,fila)->new Cuenta(rs.getInt("numeroCuenta"),
+				rs.getDouble("saldo"),
+				rs.getString("tipocuenta")),			
+				numeroCuenta
+		);
 	}
 
 	@Override
 	public List<Cuenta> findAllCuenta() {
-		TypedQuery<Cuenta> tquery=em.createNamedQuery("Cuenta.findAll",Cuenta.class);
-		return tquery.getResultList();
+		String sql="select * from cuentas";
+		return template.query(sql, (rs,fila)->new Cuenta(rs.getInt("numeroCuenta"),
+				rs.getDouble("saldo"),
+				rs.getString("tipocuenta"))
+		);
 	}
 
 	@Override
 	public void updateCuenta(Cuenta cuenta) {
-		em.merge(cuenta);
-		
+		String sql ="update cuentas set saldo=?, tipocuenta=? where ";
+		sql+=" numeroCuenta=?";
+		template.update(sql,cuenta.getSaldo(),cuenta.getTipocuenta(),cuenta.getNumeroCuenta());	
 	}
 
 }
