@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<script type="text/javascript">
+		function cambiarColor(){
+			var objTabla=document.getElementById("tblibros");
+			var objLista=document.getElementById("lista");
+			objTabla.style.backgroundColor="yellow";
+			objLista.style.backgroundColor="blue";
+		}
+	
+	</script>
+
+
+</h:head> 
+<h:body> 
+<h1>El usuario <h:outputText value="#{loginBean.usuario}" /> está  registrado</h1>
+<h:form>
+		<h:commandLink action="#{librosBean.finSesion()}" value="Desconectar" />
+	</h:form>	
+	<center>
+		<h:form prependId="false">
+			<h1>Seleccione tema:</h1>
+			<h:selectOneMenu id="lista" value="#{temasBean.temaSel}">
+				<f:selectItem itemLabel="Todos" itemValue="0"/>
+				<f:selectItems var="t" value="#{temasBean.temas}"
+							itemValue="#{t.idTema}"
+							itemLabel="#{t.tema}"/>
+				<f:ajax event="change" execute="@form" render="tblibros"/>
+			</h:selectOneMenu><br/><br/>
+			
+		</h:form><br/><br/>
+		
+		<h:dataTable id="tblibros" var="lb" value="#{librosBean.libros}" border="1" onmouseover="cambiarColor();">
+			<h:column>
+				<f:facet name="header">Titulo</f:facet>
+				#{lb.titulo}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Autor</f:facet>
+				#{lb.autor}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Precio</f:facet>
+				#{lb.precio}
+			</h:column>
+			<h:column>
+				<f:facet name="header">prueba</f:facet>
+			
+			</h:column>
+		</h:dataTable>
+		<br/><br/>
+		
+		<h:link outcome="login" value="Volver"/>
+	</center>
+</h:body> 
+</html>

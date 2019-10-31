@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<h:body> 
+	<center>
+		<h:form>
+			Introduce Usuario: <h:inputText value="#{registroBean.cliente.usuario}" /><br/><br/>
+			Introduce Contraseña: <h:inputSecret id="pwd" value="#{registroBean.cliente.password}" /><br/><br/>
+			Repetir Contraseña: <h:inputSecret id="pwd2" value="#{registroBean.repetirPwd}" >
+					<f:validator validatorId="vPass"/>
+				</h:inputSecret><h:message for="pwd2"/>
+			<br/><br/>
+			Introduce Email: <h:inputText value="#{registroBean.cliente.email}" /><br/><br/>
+			Introduce Telefono: <h:inputText value="#{registroBean.cliente.telefono}">
+			
+				<f:converter converterId="convertTel"/>
+			</h:inputText>
+			<br/><br/>
+			<h:commandButton action="#{registroBean.registrar(registroBean.cliente.email)}" value="Guardar" /> 
+		</h:form><br/><br/>
+		
+	</center>
+</h:body> 
+</html>
