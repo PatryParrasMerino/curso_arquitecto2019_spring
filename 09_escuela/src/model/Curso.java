@@ -28,7 +28,7 @@ public class Curso implements Serializable {
 	private Date fechaInicio;
 
 	//bi-directional many-to-one association to Alumno
-	@OneToMany(mappedBy="curso")
+	@OneToMany(mappedBy="curso", cascade = CascadeType.REMOVE)
 	private List<Alumno> alumnos;
 
 	public Curso() {

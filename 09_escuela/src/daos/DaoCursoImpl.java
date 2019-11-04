@@ -18,14 +18,6 @@ public class DaoCursoImpl implements  DaoCurso{
 	EntityManager em;
 
 	@Override
-	public List<Curso> findCursoByFecha(Date fechaInicio) {
-		String jpql="Select c from Curso Where c.fecha=?1";
-		Query qr=em.createQuery(jpql);
-		qr.setParameter(1, fechaInicio);
-		return (List<Curso>)qr.getResultList();
-	}
-
-	@Override
 	public void removeCurso(int idCurso) {
 		Curso curso=em.find(Curso.class, idCurso);
 		if(curso!=null) {
