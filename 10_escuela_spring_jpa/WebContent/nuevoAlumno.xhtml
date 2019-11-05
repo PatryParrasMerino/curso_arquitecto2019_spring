@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+<title>Insert Student here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<style type="text/css">
+	span.alert {
+		display: block;
+	}
+</style>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+</h:head> 
+<h:body> 
+<div class="container">
+		<h:form>
+		<div class="form-group">
+			<h:outputLabel styleClass="control-label" for="dni">Documento Nacional de identidad: </h:outputLabel>
+			<h:inputText styleClass="form-control" value="#{altaAlumnosBean.alumno.dni}" id="dni" required="true" />
+			<h:message styleClass="alert alert-warning" for="dni"/>
+			</div>
+  <div class="form-group"><h:outputLabel styleClass="control-label" for="nom">Nombre: </h:outputLabel>
+  <h:inputText styleClass="form-control" value="#{altaAlumnosBean.alumno.nombre}" id="nom" required="true" />
+			<h:message styleClass="alert alert-warning" for="nom"/>
+			</div>
+  <div class="form-group"><h:outputLabel styleClass="control-label" for="edad">Edad: </h:outputLabel>
+  <h:inputText styleClass="form-control" value="#{altaAlumnosBean.alumno.edad}" id="edad" required="true" >
+  <f:validateDoubleRange minimum="16" maximum="99" /></h:inputText>
+			<h:message styleClass="alert alert-warning" for="edad"/>
+			</div>
+  <div class="form-group"><h:outputLabel styleClass="control-label" for="eml">Correo Electrónico: </h:outputLabel>
+  <h:inputText styleClass="form-control" value="#{altaAlumnosBean.alumno.email}" id="eml" required="true" 
+  requiredMessage="Has olvidado introducir tu e-mail">
+  		<f:validateLength minimum="7" maximum="150" />
+  		</h:inputText>
+  <h:message styleClass="alert alert-warning" for="eml"/>
+  			</div>
+        <div class="form-group"><h:outputLabel for="curso" value="Curso:" />
+        <h:selectOneMenu value="#{altaAlumnosBean.idCursoSel}" required="true" id="curso" styleClass="form-control">
+            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+            <f:selectItems var="c" value="#{altaAlumnosBean.cursos}" itemLabel="#{c.denominacion}" itemValue="#{c.idCurso}" />
+  <h:message styleClass="alert alert-warning" for="curso"/>
+        </h:selectOneMenu></div>
+<div class="pull-right">
+<h:link outcome="menu" styleClass="btn btn-default" style="margin-right:5px;">Volver</h:link>
+<h:link outcome="cursos" styleClass="btn btn-default" style="margin-right:5px;">Consultar cursos</h:link>
+			<h:commandButton styleClass="btn btn-primary" action="#{altaAlumnosBean.registrar()}" value="Guardar" /> 
+</div>		
+		</h:form><br/><br/>
+	</div>
+
+</h:body> 
+</html>

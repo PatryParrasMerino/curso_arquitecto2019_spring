@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">  
+
+<h:head></h:head> 
+<h:body>
+	<center>
+		<h:form prependId="false" id="f">
+			<p:outputLabel value="Introduce fecha"/>
+			<p:calendar id="fecha" showOn="button" value="#{cursosBean.fechaSel}"/>
+			<p:commandButton value="Ver cursos" action="#{cursosBean.recuperarCursos()}"  update="listaCursos"/>
+		<p:commandLink update="listaCursos" action="#{cursosBean.borrarCurso(13)}" value="Dar de baja" />
+		<h:panelGroup id="panel">
+		<p:dataTable id="listaCursos" var="tc" value="#{cursosBean.cursos}" style="width:80%" >
+			    <p:column headerText="Denominación">
+			        <h:outputText value="#{tc.curso.denominacion}" />
+			    </p:column>
+			 
+			    <p:column headerText="Duración">
+			        <h:outputText value="#{tc.curso.duracion}" />
+			    </p:column>
+			 
+			    <p:column headerText="Fecha">
+			        <h:outputText value="#{tc.curso.fechaInicio}" />
+			    </p:column>
+			 
+			    <p:column headerText="Total Alumnos">
+			        <h:outputText value="#{tc.numAlumnos}" />
+				</p:column>
+				
+				<p:column headerText="">
+					
+			    <h:commandLink action="#{cursosBean.borrarCurso(tc.curso.idCurso)}" value="Eliminar"  >
+			    	<f:ajax execute="@form" render=":f:panel"/>
+			    </h:commandLink>
+			       
+				</p:column>
+			</p:dataTable>
+		</h:panelGroup>		
+		</h:form>
+		<br/><br/>		
+		<h:link outcome="menu" value="Volver"/>	
+	</center>
+
+</h:body> 
+</html>
