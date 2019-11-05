@@ -3,6 +3,7 @@ package service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,10 @@ public class ServiceEscuelaImpl implements ServiceEscuela {
 	@Transactional
 	@Override
 	public void altaAlumno(Alumno al, int idCurso) {
-		Curso curso=daoCursos.getOne(idCurso);
-		al.setCurso(curso);
-		if(daoAlumnos.getOne(al.getDni())!=null) {
+		Optional<Curso> curso=daoCursos.findById(idCurso); //findById devuelve un optional, si quieres que te de el curso debes usar el método .get()
+		al.setCurso(curso.get());
+		//Si existe un alumno con ese dni se lanza la excepción
+		if(daoAlumnos.existsById(al.getDni())) {
 			throw new RuntimeException();
 		}
 		daoAlumnos.save(al);

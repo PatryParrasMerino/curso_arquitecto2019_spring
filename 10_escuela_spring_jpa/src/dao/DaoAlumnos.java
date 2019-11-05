@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import model.Alumno;
 
-public interface DaoAlumnos extends JpaRepository<Alumno, Integer>{
+public interface DaoAlumnos extends JpaRepository<Alumno, Integer>{ // <tipo entidad, primary key>
 	//void saveAlumno(Alumno al);
 	//Alumno findByDni(int dni);
 	@Query("Select count(*) From Alumno a Where a.curso.idCurso=?1")

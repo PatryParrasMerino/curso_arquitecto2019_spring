@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import model.Curso;
 
-public interface DaoCursos extends JpaRepository<Curso, Integer>{
+public interface DaoCursos extends JpaRepository<Curso, Integer>{ // <tipo entidad, primary key>
 	//List<Curso> findAll();
 	//Curso findByIdCurso(int idCurso);
 	//void deleteCurso(int idCurso);
