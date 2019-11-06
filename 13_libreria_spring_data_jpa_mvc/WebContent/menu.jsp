@@ -10,6 +10,9 @@
 	
 	<h1>Bienvenido:${param.user}</h1>
 	<br/><br/>
-	<a href="toLogin">volver</a>
+	<h1><a href="temas">Ver Libros</a></h1>
+	<br/><br/>
+	<h1><a href="ventas">Mis compras</a></h1>
+
 </body>
 </html>

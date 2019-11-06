@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import daos.DaoCliente;
 import model.Cliente;
+import service.ServiceClientes;
 
 @Controller
 public class RegistroController {
 
 	@Autowired
-	DaoCliente daoCliente;
+	ServiceClientes serviceClientes;
 	
 	//es ejecutado con la pulsación del enlace registrese 
 	//de la página de login, y prepara el objeto Cliente
@@ -30,7 +30,7 @@ public class RegistroController {
 	//de la página de registro
 	@PostMapping(value = "/registrar")
 	public String registar(@ModelAttribute("cliente")Cliente cliente) {
-		daoCliente.registrar(cliente);
+		serviceClientes.guardarClientes(cliente);
 		return "login";
 	}
 	

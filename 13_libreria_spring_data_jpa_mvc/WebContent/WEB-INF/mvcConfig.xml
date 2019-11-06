@@ -18,5 +18,7 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 		
+
+	<mvc:view-controller path="toMenu" view-name="menu"/>
 	<mvc:view-controller path="toLogin" view-name="login"/>
 </beans>
