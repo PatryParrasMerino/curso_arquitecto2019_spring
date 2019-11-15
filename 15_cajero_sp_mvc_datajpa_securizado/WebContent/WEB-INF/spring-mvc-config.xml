@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+	<mvc:annotation-driven />
+	<context:component-scan base-package="controlador" />
+	
+	<!-- Objeto encargado de resolver la navegación, de buscar la jsp a la que dirigir el flujo de ejecucion -->
+	<bean id="Resolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	<mvc:view-controller path="aIngreso" view-name="ingreso"/>
+	<mvc:view-controller path="aExtraccion" view-name="extraccion"/>
+	<mvc:view-controller path="aTransferencia" view-name="transferencia"/>
+	<mvc:view-controller path="aUsuarios" view-name="login"/>
+	<mvc:view-controller path="aAdministracion" view-name="administracion"/>
+	<mvc:view-controller path="aNuevaCuenta" view-name="nuevaCuenta"/>
+	<mvc:view-controller path="aMenu" view-name="menu"/>			
+</beans>
